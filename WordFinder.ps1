@@ -5,7 +5,7 @@ param (
     , [Parameter()] [string] $Contains
     , [Parameter()] [string] $Exclude
     , [Parameter()] [int] $WordLength = 5
-    , [Parameter()] [int] $Limit = 25
+    , [Parameter()] [int] $Limit = 2500
 )
 
 
