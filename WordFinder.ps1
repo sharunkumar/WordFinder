@@ -4,6 +4,8 @@ param (
     , [Parameter()] [string] $EndsWith
     , [Parameter()] [string] $Contains
     , [Parameter()] [string] $Exclude
+    , [Parameter()] [string[]] $IndexMatch
+    , [Parameter()] [string[]] $IndexNotMatch
     , [Parameter()] [int] $WordLength = 5
 )
 
@@ -31,6 +33,22 @@ if ($Contains.Length -gt 1) {
 
 if ($Exclude.Length -gt 0) {
     $words = $words | Where-Object { $_ -notmatch "[$Exclude]" }
+}
+
+if ($IndexMatch.Length -gt 0) {
+    for ($i = 0; $i -lt $IndexMatch.Length; $i++) {
+        $index = [int]::Parse($IndexMatch[$i][1]) - 1
+        $character = $IndexMatch[$i][0]
+        $words = $words | Where-Object { $_[$index] -eq $character }
+    }
+}
+
+if ($IndexNotMatch.Length -gt 0) {
+    for ($i = 0; $i -lt $IndexNotMatch.Length; $i++) {
+        $index = [int]::Parse($IndexNotMatch[$i][1]) - 1
+        $character = $IndexNotMatch[$i][0]
+        $words = $words | Where-Object { $_[$index] -ne $character }
+    }
 }
 
 return $words
