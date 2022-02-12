@@ -23,7 +23,17 @@ function Get-WordsApi($Offset = 0) {
     return $words
 }
 
-$words = Get-WordsApi
+if ($null -eq $Global:WordCache) {
+    $Global:WordCache = @{}
+}
+
+$cacheKey = "$WordLength,$StartsWith,$($Contains[0]),$EndsWith"
+
+if ($null -eq $Global:WordCache[$cacheKey]) {
+    $Global:WordCache[$cacheKey] = Get-WordsApi
+}
+
+$words = $Global:WordCache[$cacheKey]
 
 if ($Contains.Length -gt 1) {
     for ($i = 1; $i -lt $Contains.Length; $i++) {
