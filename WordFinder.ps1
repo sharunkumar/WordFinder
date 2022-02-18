@@ -7,6 +7,7 @@ param (
     , [Parameter()] [string[]] $IndexMatch
     , [Parameter()] [string[]] $IndexNotMatch
     , [Parameter()] [int] $WordLength = 5
+    , [Parameter()] [switch] $Spread
 )
 
 function Get-WordsApi($Offset = 0) {
@@ -63,6 +64,11 @@ if ($IndexNotMatch.Length -gt 0) {
         $character = $IndexNotMatch[$i][0]
         $words = $words | Where-Object { $_[$index] -ne $character }
     }
+}
+
+if($Spread) {
+    $words | ForEach-Object { Write-Host -NoNewline "$_ " }
+    Exit
 }
 
 return $words
