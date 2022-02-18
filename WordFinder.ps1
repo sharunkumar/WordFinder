@@ -1,11 +1,11 @@
 [CmdletBinding()]
 param (
-    [Parameter()] [string] $StartsWith
-    , [Parameter()] [string] $EndsWith
-    , [Parameter()] [string] $Contains
-    , [Parameter()] [string] $Exclude
-    , [Parameter()] [string[]] $IndexMatch
-    , [Parameter()] [string[]] $IndexNotMatch
+    [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [string] $StartsWith
+    , [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [string] $EndsWith
+    , [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [string] $Contains
+    , [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [string] $Exclude
+    , [Parameter()] [ValidatePattern("^[a-zA-Z][1-9]+$")] [string[]] $IndexMatch
+    , [Parameter()] [ValidatePattern("^[a-zA-Z][1-9]+$")] [string[]] $IndexNotMatch
     , [Parameter()] [int] $WordLength = 5
     , [Parameter()] [switch] $NoRepeats
     , [Parameter()] [switch] $Spread
