@@ -7,6 +7,7 @@ param (
     , [Parameter()] [string[]] $IndexMatch
     , [Parameter()] [string[]] $IndexNotMatch
     , [Parameter()] [int] $WordLength = 5
+    , [Parameter()] [switch] $NoRepeats
     , [Parameter()] [switch] $Spread
 )
 
@@ -64,6 +65,10 @@ if ($IndexNotMatch.Length -gt 0) {
         $character = $IndexNotMatch[$i][0]
         $words = $words | Where-Object { $_[$index] -ne $character }
     }
+}
+
+if ($NoRepeats) {
+    $words = $words | Where-Object { ([System.Collections.Generic.HashSet[char]]$_).Count -eq $_.Length }
 }
 
 if($Spread) {
