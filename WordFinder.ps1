@@ -6,6 +6,7 @@ param (
     , [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [string] $Exclude
     , [Parameter()] [ValidatePattern("^[a-zA-Z][1-9]+$")] [string[]] $IndexMatch
     , [Parameter()] [ValidatePattern("^[a-zA-Z][1-9]+$")] [string[]] $IndexNotMatch
+    , [Parameter()] [ValidatePattern("^[_a-zA-Z]+$")] [string[]] $TemplateString
     , [Parameter()] [int] $WordLength = 5
     , [Parameter()] [switch] $NoRepeats
     , [Parameter()] [switch] $Spread
@@ -65,6 +66,11 @@ if ($IndexNotMatch.Length -gt 0) {
         $character = $IndexNotMatch[$i][0]
         $words = $words | Where-Object { $_[$index] -ne $character }
     }
+}
+
+if ($TemplateString.Length -gt 0) {
+    $template = $TemplateString -replace "_","."
+    $words = $words | Where-Object { $_ -match $template }
 }
 
 if ($NoRepeats) {
