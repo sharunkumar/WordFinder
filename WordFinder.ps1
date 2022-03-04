@@ -2,7 +2,7 @@
 param (
     [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [string] $StartsWith
     , [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [string] $EndsWith
-    , [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [string] $Contains
+    , [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [Alias("Include")] [string] $Contains
     , [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [string] $Exclude
     , [Parameter()] [ValidatePattern("^[a-zA-Z][1-9]+$")] [string[]] $IndexMatch
     , [Parameter()] [ValidatePattern("^[a-zA-Z][1-9]+$")] [string[]] $IndexNotMatch
