@@ -7,6 +7,7 @@ param (
     , [Parameter()] [ValidatePattern("^[a-zA-Z][1-9]+$")] [string[]] $IndexMatch
     , [Parameter()] [ValidatePattern("^[a-zA-Z][1-9]+$")] [string[]] $IndexNotMatch
     , [Parameter()] [ValidatePattern("^[_a-zA-Z]+$")] [string[]] $TemplateString
+    , [Parameter()] [ValidatePattern("^[a-zA-Z]+$")] [string[]] $Charset
     , [Parameter()] [int] $WordLength = 5
     , [Parameter()] [switch] $NoRepeats
     , [Parameter()] [switch] $Spread
@@ -41,6 +42,12 @@ function Get-WordsApiCached {
 }
 
 $words = Get-WordsApiCached
+
+if ($Charset.Length -gt 0) {
+    $words = $words | Where-Object {
+        $_ -match "^[$Charset]+$"
+    }
+}
 
 if ($Contains.Length -gt 1) {
     for ($i = 1; $i -lt $Contains.Length; $i++) {
